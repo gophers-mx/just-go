@@ -13,7 +13,7 @@ Aquí debes explicar cómo se puede instalar tu proyecto. Asegúrate de incluir tod
 
 ## Uso
 
-para generar un nuevo proyecto, se ejecuta el comando ```just-go init --type cli --name nombre_proyecto``
+para generar un nuevo proyecto, se ejecuta el comando ```just-go init --type cli --name nombre_proyecto```
 
 ## Contribuir
 Si tu proyecto es de código abierto, es importante que incluyas esta sección. Aquí debes explicar cómo las personas interesadas pueden contribuir al proyecto, ya sea reportando errores, sugiriendo mejoras o enviando pull requests.
