@@ -18,7 +18,7 @@ Para generar un nuevo proyecto, se ejecuta el comando ```just-go init --type cli
 Si quieres contribuir al proyecto, puedes enviar tu pull request. Las sugerencias también son bienvenidas.
 
 ## Licencia
-Aquí debes colocar el tipo de licencia que has seleccionado para tu proyecto.
+[![GPLv3](https://www.gnu.org/graphics/gplv3-127x51.png "Licencia GNU General Public License")](https://www.gnu.org/licenses/gpl-3.0.html) 
 
 ## Contacto
 [Gohpers MX en Telegram](https://t.me/golangmx) 
