@@ -1,0 +1,50 @@
+linters:
+  enable:
+    - dupl
+    - errcheck
+    - funlen
+    - goconst
+    - godot
+    - gofmt
+    - gomnd
+    - gosimple
+    - govet
+    - ineffassign
+    - predeclared
+    - revive
+    - thelper
+    - typecheck
+    - unparam
+    - unused
+    - wastedassign
+    - whitespace
+
+linters-settings:
+  funlen:
+    lines: 80
+    statements: 40
+  godot:
+    scope: toplevel
+    capital: true
+  gofmt:
+    simplify: true
+  gomnd:
+    settings:
+      mnd:
+        checks: argument,case,condition,operation,return,assign
+  unparam:
+    check-exported: false
+  revive:
+    ignore-generated-header: false
+    severity: error
+    confidence: 0.8
+    rules:
+      - name: exported
+
+run:
+  skip-dirs:
+    - .git
+    - .husky
+    - node_modules
+    - mocks
+    - vendor
