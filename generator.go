@@ -11,35 +11,42 @@ import (
 	"github.com/gophers-mx/just-go/pkg"
 )
 
-func Run(assets embed.FS, projectName, version *string, generator pkg.Generator) {
-	checkFlags(projectName, version)
-	cfg := New(projectName, version, assets)
-
-	pkg.CreateDirectory()
-	generator.Run(cfg)
+type Generathor struct {
+	Assets      embed.FS
+	ProjectName *string
+	Version     *string
+	Generator   pkg.Generator
 }
 
-func checkFlags(projectName, version *string) {
-	if *projectName == "" {
+func (g *Generathor) Run() {
+	g.checkFlags()
+	cfg := g.cfg()
+
+	pkg.CreateDirectory()
+	g.Generator.Run(cfg)
+}
+
+func (g *Generathor) checkFlags() {
+	if *g.ProjectName == "" {
 		fmt.Println("name cannot be blank")
 		os.Exit(1)
 	}
 
-	if *version == "" {
-		*version = runtime.Version()
+	if *g.Version == "" {
+		*g.Version = runtime.Version()
 	}
 
-	*version = cleanVersion(*version)
+	*g.Version = g.cleanVersion()
 }
 
-func cleanVersion(v string) (res string) {
+func (g *Generathor) cleanVersion() (res string) {
 	defer func() {
 		if recover() != nil {
 			res = "1.18"
 		}
 	}()
 
-	vn := strings.Split(v, "go")[1]
+	vn := strings.Split(*g.Version, "go")[1]
 	vs := strings.Split(vn, ".")
 
 	res = fmt.Sprintf("%s.%s\n", vs[0], vs[1])
@@ -47,11 +54,11 @@ func cleanVersion(v string) (res string) {
 	return
 }
 
-func New(projectName, version *string, assets embed.FS) *config.ProjectConfig {
+func (g *Generathor) cfg() *config.ProjectConfig {
 	cfg := config.ProjectConfig{
-		FS:      assets,
-		Name:    *projectName,
-		Version: *version,
+		FS:      g.Assets,
+		Name:    *g.ProjectName,
+		Version: *g.Version,
 	}
 
 	return config.New(cfg)
