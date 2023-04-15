@@ -6,9 +6,9 @@ import (
 )
 
 type ProjectConfig struct {
-	FS      embed.FS
-	Name    string
-	Version string
+	FS              embed.FS
+	Name            string
+	TemplateDetails interface{}
 }
 
 const (
@@ -27,9 +27,9 @@ var ValidTypes = map[string]string{
 func New(cfg ProjectConfig) *ProjectConfig {
 	once.Do(func() {
 		config = &ProjectConfig{
-			FS:      cfg.FS,
-			Name:    cfg.Name,
-			Version: cfg.Version,
+			FS:              cfg.FS,
+			Name:            cfg.Name,
+			TemplateDetails: cfg.TemplateDetails,
 		}
 	})
 	return config

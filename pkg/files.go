@@ -99,7 +99,7 @@ func GenFromTemplate(templatePath, destination, filename string) {
 		}
 	}()
 
-	if err := tmpl.Execute(file, cfg); err != nil {
+	if err := tmpl.Execute(file, cfg.TemplateDetails); err != nil {
 		CleanUp(err)
 	}
 }
