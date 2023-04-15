@@ -6,9 +6,9 @@ import (
 )
 
 type ProjectConfig struct {
-	FS   embed.FS
-	Name string
-	Type string
+	FS      embed.FS
+	Name    string
+	Version string
 }
 
 const (
@@ -23,19 +23,19 @@ var ValidTypes = map[string]string{
 	"cli": ProjectTypeCLI,
 }
 
-// SetConfig sets the project config values using a singleton.
-func SetConfig(cfg ProjectConfig) *ProjectConfig {
+// New sets the project config values using a singleton.
+func New(cfg ProjectConfig) *ProjectConfig {
 	once.Do(func() {
 		config = &ProjectConfig{
-			FS:   cfg.FS,
-			Name: cfg.Name,
-			Type: cfg.Type,
+			FS:      cfg.FS,
+			Name:    cfg.Name,
+			Version: cfg.Version,
 		}
 	})
 	return config
 }
 
-// GetConfig retrieves the project's config.
-func GetConfig() *ProjectConfig {
+// Config retrieves the project's config.
+func Config() *ProjectConfig {
 	return config
 }

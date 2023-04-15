@@ -4,45 +4,55 @@ import (
 	"embed"
 	"fmt"
 	"os"
+	"runtime"
 	"strings"
 
 	"github.com/gophers-mx/just-go/config"
 	"github.com/gophers-mx/just-go/pkg"
 )
 
-func Run(assets embed.FS, projectName, projectType *string, generator pkg.Generator) {
-	checkFlags(projectName, projectType)
-	cfg := setConfig(projectName, projectType, assets)
+func Run(assets embed.FS, projectName, version *string, generator pkg.Generator) {
+	checkFlags(projectName, version)
+	cfg := New(projectName, version, assets)
 
 	pkg.CreateDirectory()
 	generator.Run(cfg)
 }
 
-func checkFlags(projectName, projectType *string) {
+func checkFlags(projectName, version *string) {
 	if *projectName == "" {
 		fmt.Println("name cannot be blank")
 		os.Exit(1)
 	}
 
-	if *projectType == "" {
-		fmt.Println("type cannot be blank")
-		os.Exit(1)
+	if *version == "" {
+		*version = runtime.Version()
 	}
 
-	checkedType, ok := config.ValidTypes[strings.ToLower(*projectType)]
-	if !ok {
-		fmt.Println("type is not valid")
-		os.Exit(1)
-	}
-	*projectType = checkedType
+	*version = cleanVersion(*version)
 }
 
-func setConfig(projectName, projectType *string, assets embed.FS) *config.ProjectConfig {
+func cleanVersion(v string) (res string) {
+	defer func() {
+		if recover() != nil {
+			res = "1.18"
+		}
+	}()
+
+	vn := strings.Split(v, "go")[1]
+	vs := strings.Split(vn, ".")
+
+	res = fmt.Sprintf("%s.%s\n", vs[0], vs[1])
+
+	return
+}
+
+func New(projectName, version *string, assets embed.FS) *config.ProjectConfig {
 	cfg := config.ProjectConfig{
-		FS:   assets,
-		Name: *projectName,
-		Type: *projectType,
+		FS:      assets,
+		Name:    *projectName,
+		Version: *version,
 	}
 
-	return config.SetConfig(cfg)
+	return config.New(cfg)
 }
