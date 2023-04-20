@@ -6,13 +6,14 @@ import (
 	"os"
 
 	"github.com/gophers-mx/just-go/config"
-	"github.com/gophers-mx/just-go/pkg"
+	"github.com/gophers-mx/just-go/pkg/files"
+	"github.com/gophers-mx/just-go/pkg/generator"
 )
 
 type Generathor struct {
 	Assets          embed.FS
 	ProjectName     *string
-	Generator       pkg.Generator
+	Generator       generator.Generator
 	TemplateDetails interface{}
 }
 
@@ -20,7 +21,7 @@ func (g *Generathor) Run() {
 	g.checkFlags()
 	cfg := g.cfg()
 
-	pkg.CreateDirectory()
+	files.CreateDirectory()
 	g.Generator.Run(cfg)
 }
 

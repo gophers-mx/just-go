@@ -1,4 +1,4 @@
-package pkg
+package generator
 
 import (
 	"github.com/gophers-mx/just-go/config"
