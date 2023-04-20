@@ -5,28 +5,19 @@ import (
 	"sync"
 )
 
-type ProjectConfig struct {
+var config *Cfg
+var once sync.Once
+
+type Cfg struct {
 	FS              embed.FS
 	Name            string
 	TemplateDetails interface{}
 }
 
-const (
-	ProjectTypeCLI = "CLI"
-)
-
-var config *ProjectConfig
-var once sync.Once
-
-// ValidTypes holds the project types that this tool can generate.
-var ValidTypes = map[string]string{
-	"cli": ProjectTypeCLI,
-}
-
 // New sets the project config values using a singleton.
-func New(cfg ProjectConfig) *ProjectConfig {
+func New(cfg Cfg) *Cfg {
 	once.Do(func() {
-		config = &ProjectConfig{
+		config = &Cfg{
 			FS:              cfg.FS,
 			Name:            cfg.Name,
 			TemplateDetails: cfg.TemplateDetails,
@@ -36,6 +27,6 @@ func New(cfg ProjectConfig) *ProjectConfig {
 }
 
 // Config retrieves the project's config.
-func Config() *ProjectConfig {
+func Config() *Cfg {
 	return config
 }

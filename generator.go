@@ -32,8 +32,8 @@ func (g *Generathor) checkFlags() {
 	}
 }
 
-func (g *Generathor) cfg() *config.ProjectConfig {
-	cfg := config.ProjectConfig{
+func (g *Generathor) cfg() *config.Cfg {
+	cfg := config.Cfg{
 		FS:              g.Assets,
 		Name:            *g.ProjectName,
 		TemplateDetails: g.TemplateDetails,
